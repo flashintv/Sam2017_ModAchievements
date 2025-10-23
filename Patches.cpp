@@ -54,7 +54,6 @@ void ApplyPatches(HANDLE process)
 
 		Sleep(500);
 	}
-	std::cout << "Applying patches!" << std::endl;
 
 	char* steamUserStats_func;
 	uint64_t steamUserStats = scanner.FindSignature(scanner.TargetModule.dwBase, scanner.TargetModule.dwSize,
@@ -92,6 +91,10 @@ void ApplyPatches(HANDLE process)
 		FlushInstructionCache(process, (void*)set_achievement, byte_size);
 
 		std::cout << "Achievement hook was successful!" << std::endl;
+	}
+	else {
+		std::cout << "Pattern for achievement awarding function not found. The game was either updated or it's already patched!" << std::endl;
+		return;
 	}
 
 	std::cout << "Patches applied successfully." << std::endl;

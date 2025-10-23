@@ -106,6 +106,7 @@ public:
 		for (uint64_t i = 0; i < size; i++)
 		{
 			if (MemoryCompare((const BYTE*)(data + i), (const BYTE*)sig, mask)) {
+				delete[] data;
 				return start + i;
 			}
 		}

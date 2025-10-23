@@ -28,6 +28,8 @@ samProcess_t LookForSamExecutable()
 	samProcess_t sSam;
 	do {
 		if (strncmp(pe32.szExeFile, "Sam2017_Unrestricted.exe", 25) == 0) {
+			CloseHandle(hProcessSnap);
+
 			sSam.bWasFound = true;
 			sSam.dwProcessID = pe32.th32ProcessID;
 			return sSam;

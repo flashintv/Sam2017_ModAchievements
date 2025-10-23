@@ -1,3 +1,4 @@
+// https://github.com/Zer0Mem0ry/SignatureScanner
 #pragma once
 
 #include <iostream>

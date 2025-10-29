@@ -1,4 +1,7 @@
 # Serious Sam Fusion Achievement Enabler
+[![Github All Releases](https://img.shields.io/github/downloads/flashintv/Sam2017_ModAchievements/total.svg)]()
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/flashintv/Sam2017_ModAchievements)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/flashintv/Sam2017_ModAchievements)
 
 ## How to use
 Download Sam2017_ModAchievements.exe from the latest releases.

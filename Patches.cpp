@@ -1,6 +1,9 @@
 #include <Windows.h>
 #include "Scanner.h"
 
+// To debug the ready status!
+#define READY_STATUS_DBG
+
 void ApplyPatches(HANDLE process)
 {
 	SignatureScanner scanner;
@@ -12,44 +15,26 @@ void ApplyPatches(HANDLE process)
 		return;
 	}
 
-	bool* bIsWatchingIntro;
-	uint64_t isWatchingIntro = scanner.FindSignature(scanner.TargetModule.dwBase, scanner.TargetModule.dwSize,
-		"\x48\x8B\x15\x00\x00\x00\x00\x41\xB8\x00\x00\x00\x00\x48\x8B\xC8\x48\x89\x74", "xxx????xx????xxxxxx");
-	if (isWatchingIntro != NULL) {
+	int* nVerificationCounter = NULL;
+	uint64_t signature_verification_counter = scanner.FindSignature(scanner.TargetModule.dwBase, scanner.TargetModule.dwSize,
+		"\x83\x3D\xCC\xCC\xCC\xCC\xCC\x48\x8B\xF9\x7D\x23", "xx?????xxxxx");
+	if (signature_verification_counter != NULL) {
 		uint32_t ripOffset = NULL;
-		ReadProcessMemory(process, reinterpret_cast<void*>(isWatchingIntro + 3), &ripOffset, sizeof(ripOffset), NULL);
-
-		// normally the qword stores an absolute pointer, but after clicking into the main menu it stores a relative????
-		// we are checking if the pointer is absolute by checking for a '1' on the +4 offset
-		bIsWatchingIntro = reinterpret_cast<bool*>(isWatchingIntro + 7 + ripOffset + 4);
+		ReadProcessMemory(process, reinterpret_cast<void*>(signature_verification_counter + 2), &ripOffset, sizeof(ripOffset), NULL);
+		nVerificationCounter = reinterpret_cast<int*>(signature_verification_counter + 7 + ripOffset);
 	}
 	else {
-		std::cout << "Pattern for 'bIsWatchingIntro' not found." << std::endl;
-		return;
-	}
-
-	bool* bWasStartScreenShown;
-	uint64_t wasStartScreenShown = scanner.FindSignature(scanner.TargetModule.dwBase, scanner.TargetModule.dwSize,
-		"\x83\x3D\x00\x00\x00\x00\x00\x8B\xC8", "xx?????xx");
-	if (wasStartScreenShown != NULL) {
-		uint32_t ripOffset = NULL;
-		ReadProcessMemory(process, reinterpret_cast<void*>(wasStartScreenShown + 2), &ripOffset, sizeof(ripOffset), NULL);
-		bWasStartScreenShown = reinterpret_cast<bool*>(wasStartScreenShown + 7 + ripOffset);
-	}
-	else {
-		std::cout << "Pattern for 'bWasStartScreenShown' not found." << std::endl;
+		std::cout << "Pattern for signature verification not found." << std::endl;
 		return;
 	}
 
 	std::cout << "Waiting for ready status!" << std::endl;
 	while (true) {
-		bool bIsWatchingIntro_val = true;
-		bool bWasStartScreenShown_val = false;
-
-		ReadProcessMemory(process, bIsWatchingIntro, &bIsWatchingIntro_val, sizeof(bIsWatchingIntro_val), NULL);
-		ReadProcessMemory(process, bWasStartScreenShown, &bWasStartScreenShown_val, sizeof(bWasStartScreenShown_val), NULL);
-
-		if (bWasStartScreenShown_val && !bIsWatchingIntro_val)
+		int nVerificationCounter_val = 0;
+		ReadProcessMemory(process, nVerificationCounter, &nVerificationCounter_val, sizeof(nVerificationCounter_val), NULL);
+		
+		// If we have reached at least 2 verifications, we are safe to inject code - because executable was verified.
+		if (nVerificationCounter_val >= 2)
 			break;
 
 		Sleep(500);

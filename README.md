@@ -1,14 +1,17 @@
 # Serious Sam Fusion Achievement Enabler
+[![Github All Releases](https://img.shields.io/github/downloads/flashintv/Sam2017_ModAchievements/total.svg)]()
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/flashintv/Sam2017_ModAchievements)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/flashintv/Sam2017_ModAchievements)
 
 ## How to use
 Download Sam2017_ModAchievements.exe from the latest releases.
->| 1st Method: |
->|:- |
->| Put the `Sam2017_ModAchievements.exe` inside the game folder's `/Bin/x64/` folder right besides the `Sam2017_Unrestricted.exe` and launch `Sam2017_ModAchievements.exe`. |
->
->| 2nd Method: |
->|:- |
->| Launch `Sam2017_Unrestricted.exe` or modded Fusion through Steam and then launch `Sam2017_ModAchievements.exe`. |
+| 1st Method: |
+|:- |
+| Put the `Sam2017_ModAchievements.exe` inside the game folder's `/Bin/x64/` folder right besides the `Sam2017_Unrestricted.exe` and launch `Sam2017_ModAchievements.exe`. |
+
+| 2nd Method: |
+|:- |
+| Launch `Sam2017_Unrestricted.exe` or modded Fusion through Steam and then launch `Sam2017_ModAchievements.exe`. |
 
 ## Launcher information
 If the game quits/crashes - you don't need to relaunch the achievement enabler, just launch the modded Fusion executable.

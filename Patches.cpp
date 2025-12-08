@@ -1,9 +1,6 @@
 #include <Windows.h>
 #include "Scanner.h"
 
-// To debug the ready status!
-#define READY_STATUS_DBG
-
 void ApplyPatches(HANDLE process)
 {
 	SignatureScanner scanner;
@@ -22,22 +19,21 @@ void ApplyPatches(HANDLE process)
 		uint32_t ripOffset = NULL;
 		ReadProcessMemory(process, reinterpret_cast<void*>(signature_verification_counter + 2), &ripOffset, sizeof(ripOffset), NULL);
 		nVerificationCounter = reinterpret_cast<int*>(signature_verification_counter + 7 + ripOffset);
+
+		std::cout << "Waiting for ready status!" << std::endl;
+		while (true) {
+			int nVerificationCounter_val = 0;
+			ReadProcessMemory(process, nVerificationCounter, &nVerificationCounter_val, sizeof(nVerificationCounter_val), NULL);
+
+			// If we have reached at least 2 verifications, we are safe to inject code - because executable was verified.
+			if (nVerificationCounter_val >= 2)
+				break;
+
+			Sleep(500);
+		}
 	}
 	else {
-		std::cout << "Pattern for signature verification not found." << std::endl;
-		return;
-	}
-
-	std::cout << "Waiting for ready status!" << std::endl;
-	while (true) {
-		int nVerificationCounter_val = 0;
-		ReadProcessMemory(process, nVerificationCounter, &nVerificationCounter_val, sizeof(nVerificationCounter_val), NULL);
-		
-		// If we have reached at least 2 verifications, we are safe to inject code - because executable was verified.
-		if (nVerificationCounter_val >= 2)
-			break;
-
-		Sleep(500);
+		std::cout << "Pattern for signature verification not found. If you're running 'internal' branch of Fusion, ignore it!" << std::endl;
 	}
 
 	char* steamUserStats_func;

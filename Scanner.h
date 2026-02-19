@@ -59,16 +59,13 @@ public:
 		mEntry.dwSize = sizeof(mEntry);
 
 		do {
-			if (!strcmp(mEntry.szModule, (LPSTR)moduleName)) {
+			if (strcmp(mEntry.szModule, (LPSTR)moduleName) == 0) {
 				CloseHandle(hmodule);
-
-				TargetModule = { (uint64_t)mEntry.hModule, mEntry.modBaseSize };
-				return TargetModule;
+				return TargetModule = { (uint64_t)mEntry.hModule, (uint64_t)mEntry.modBaseSize };
 			}
 		} while (Module32Next(hmodule, &mEntry));
 
-		module mod = { (DWORD)false, (DWORD)false };
-		return mod;
+		return TargetModule = { };
 	}
 
 	// Basic WPM wrapper, easier to use.

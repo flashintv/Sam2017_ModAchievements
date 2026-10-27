@@ -3,6 +3,9 @@
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/flashintv/Sam2017_ModAchievements)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/flashintv/Sam2017_ModAchievements)
 
+> [!IMPORTANT]
+> **This project has been replaced and it will no longer receive updates. Please use [Sam2017_ModAchievementsEx](https://github.com/flashintv/Sam2017_ModAchievementsEx) instead.**
+
 ## How to use
 Download Sam2017_ModAchievements.exe from the latest releases.
 | 1st Method: |

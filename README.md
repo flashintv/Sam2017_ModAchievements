@@ -4,7 +4,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/flashintv/Sam2017_ModAchievements)
 
 > [!IMPORTANT]
-> **This project has been replaced and it will no longer receive updates. Please use [Sam2017_ModAchievementsEx](https://github.com/flashintv/Sam2017_ModAchievementsEx) instead.**
+> **This project has been replaced and it will no longer receive updates. Please use [Sam2017_ModAchievementsEx](https://github.com/flashintv/SamCollection_ModAchievementsEx) instead for more features and Serious Sam 4 support.**
 
 ## How to use
 Download Sam2017_ModAchievements.exe from the latest releases.
